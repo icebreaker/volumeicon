@@ -4,3 +4,4 @@ config.status
 src/.deps
 src/*.o
 src/volumeicon
+autom4te.cache
