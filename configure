@@ -597,13 +597,11 @@ ac_includes_default="\
 ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
 LTLIBOBJS
-ENABLE_NOTIFY_FALSE
-ENABLE_NOTIFY_TRUE
 ENABLE_OSS_FALSE
 ENABLE_OSS_TRUE
+OSS_CFLAGS
 NOTIFY_LIBS
 NOTIFY_CFLAGS
-OSS_CFLAGS
 ALSA_LIBS
 ALSA_CFLAGS
 GTK_LIBS
@@ -714,7 +712,9 @@ PKG_CONFIG_LIBDIR
 GTK_CFLAGS
 GTK_LIBS
 ALSA_CFLAGS
-ALSA_LIBS'
+ALSA_LIBS
+NOTIFY_CFLAGS
+NOTIFY_LIBS'
 
 
 # Initialize some variables set by options.
@@ -1354,6 +1354,9 @@ Some influential environment variables:
   GTK_LIBS    linker flags for GTK, overriding pkg-config
   ALSA_CFLAGS C compiler flags for ALSA, overriding pkg-config
   ALSA_LIBS   linker flags for ALSA, overriding pkg-config
+  NOTIFY_CFLAGS
+              C compiler flags for NOTIFY, overriding pkg-config
+  NOTIFY_LIBS linker flags for NOTIFY, overriding pkg-config
 
 Use these variables to override the choices made by `configure' or to help
 it to find libraries and programs with nonstandard names/locations.
@@ -4853,32 +4856,99 @@ fi
 
 if test "x${notify}" = xyes; then
 # Check for libnotify
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for /usr/include/libnotify/notify.h" >&5
-$as_echo_n "checking for /usr/include/libnotify/notify.h... " >&6; }
-if test "${ac_cv_file__usr_include_libnotify_notify_h+set}" = set; then :
-  $as_echo_n "(cached) " >&6
+
+pkg_failed=no
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for NOTIFY" >&5
+$as_echo_n "checking for NOTIFY... " >&6; }
+
+if test -n "$NOTIFY_CFLAGS"; then
+    pkg_cv_NOTIFY_CFLAGS="$NOTIFY_CFLAGS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libnotify >= 0.5.0\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libnotify >= 0.5.0") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_NOTIFY_CFLAGS=`$PKG_CONFIG --cflags "libnotify >= 0.5.0" 2>/dev/null`
 else
-  test "$cross_compiling" = yes &&
-  as_fn_error $? "cannot check for file existence when cross compiling" "$LINENO" 5
-if test -r "/usr/include/libnotify/notify.h"; then
-  ac_cv_file__usr_include_libnotify_notify_h=yes
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+if test -n "$NOTIFY_LIBS"; then
+    pkg_cv_NOTIFY_LIBS="$NOTIFY_LIBS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libnotify >= 0.5.0\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libnotify >= 0.5.0") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_NOTIFY_LIBS=`$PKG_CONFIG --libs "libnotify >= 0.5.0" 2>/dev/null`
 else
-  ac_cv_file__usr_include_libnotify_notify_h=no
+  pkg_failed=yes
 fi
+ else
+    pkg_failed=untried
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_file__usr_include_libnotify_notify_h" >&5
-$as_echo "$ac_cv_file__usr_include_libnotify_notify_h" >&6; }
-if test "x$ac_cv_file__usr_include_libnotify_notify_h" = x""yes; then :
 
+
+
+if test $pkg_failed = yes; then
+   	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
 else
-  as_fn_error $? "The file /usr/include/libnotify/notify.h does not exist." "$LINENO" 5
+        _pkg_short_errors_supported=no
 fi
+        if test $_pkg_short_errors_supported = yes; then
+	        NOTIFY_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "libnotify >= 0.5.0" 2>&1`
+        else
+	        NOTIFY_PKG_ERRORS=`$PKG_CONFIG --print-errors "libnotify >= 0.5.0" 2>&1`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$NOTIFY_PKG_ERRORS" >&5
 
-NOTIFY_CFLAGS="-DCOMPILEWITH_NOTIFY"
-NOTIFY_LIBS="-lnotify"
+	as_fn_error $? "Package requirements (libnotify >= 0.5.0) were not met:
+
+$NOTIFY_PKG_ERRORS
+
+Consider adjusting the PKG_CONFIG_PATH environment variable if you
+installed software in a non-standard prefix.
+
+Alternatively, you may set the environment variables NOTIFY_CFLAGS
+and NOTIFY_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details." "$LINENO" 5
+elif test $pkg_failed = untried; then
+     	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+	{ { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
+as_fn_error $? "The pkg-config script could not be found or is too old.  Make sure it
+is in your PATH or set the PKG_CONFIG environment variable to the full
+path to pkg-config.
+
+Alternatively, you may set the environment variables NOTIFY_CFLAGS
+and NOTIFY_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+
+To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+See \`config.log' for more details" "$LINENO" 5 ; }
+else
+	NOTIFY_CFLAGS=$pkg_cv_NOTIFY_CFLAGS
+	NOTIFY_LIBS=$pkg_cv_NOTIFY_LIBS
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
 fi
+NOTIFY_CFLAGS+="-DCOMPILEWITH_NOTIFY"
 
 
+fi
 
 
 
@@ -4888,14 +4958,6 @@ fi
 else
   ENABLE_OSS_TRUE='#'
   ENABLE_OSS_FALSE=
-fi
-
- if test "$notify" = "yes"; then
-  ENABLE_NOTIFY_TRUE=
-  ENABLE_NOTIFY_FALSE='#'
-else
-  ENABLE_NOTIFY_TRUE='#'
-  ENABLE_NOTIFY_FALSE=
 fi
 
 
@@ -5054,10 +5116,6 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${ENABLE_OSS_TRUE}" && test -z "${ENABLE_OSS_FALSE}"; then
   as_fn_error $? "conditional \"ENABLE_OSS\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
-if test -z "${ENABLE_NOTIFY_TRUE}" && test -z "${ENABLE_NOTIFY_FALSE}"; then
-  as_fn_error $? "conditional \"ENABLE_NOTIFY\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 

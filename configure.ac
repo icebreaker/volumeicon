@@ -43,17 +43,15 @@ fi
 
 if test "x${notify}" = xyes; then
 # Check for libnotify
-AC_CHECK_FILE([/usr/include/libnotify/notify.h], [], [AC_MSG_ERROR([The file /usr/include/libnotify/notify.h does not exist.])])
-NOTIFY_CFLAGS="-DCOMPILEWITH_NOTIFY"
-NOTIFY_LIBS="-lnotify"
+PKG_CHECK_MODULES([NOTIFY], [libnotify >= 0.5.0])
+NOTIFY_CFLAGS+="-DCOMPILEWITH_NOTIFY"
+AC_SUBST(NOTIFY_CFLAGS)
+AC_SUBST(NOTIFY_LIBS)
 fi
 
 AC_SUBST(OSS_CFLAGS)
-AC_SUBST(NOTIFY_CFLAGS)
-AC_SUBST(NOTIFY_LIBS)
 
 AM_CONDITIONAL(ENABLE_OSS, test "$oss" = "yes")
-AM_CONDITIONAL(ENABLE_NOTIFY, test "$notify" = "yes")
 
 AC_CONFIG_FILES(Makefile \
 		src/Makefile \
