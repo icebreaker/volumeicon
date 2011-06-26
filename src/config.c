@@ -64,9 +64,9 @@ static void config_load_default()
 	if(!m_theme)
 		config_set_theme("Default");
 	if(!m_hotkey_up)
-		config_set_hotkey_up("XF86_AudioRaiseVolume");
+		config_set_hotkey_up("XF86AudioRaiseVolume");
 	if(!m_hotkey_down)
-		config_set_hotkey_down("XF86_AudioLowerVolume");
+		config_set_hotkey_down("XF86AudioLowerVolume");
 	if(!m_hotkey_mute)
 		config_set_hotkey_mute("XF86AudioMute");
 }
