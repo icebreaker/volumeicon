@@ -29,6 +29,7 @@ void config_initialize();
 
 void config_set_helper(const gchar * helper);
 void config_set_theme(const gchar * theme);
+void config_set_card(const gchar * card);
 void config_set_channel(const gchar * channel);
 void config_set_stepsize(int stepsize);
 void config_set_left_mouse_slider(gboolean active);
@@ -42,6 +43,7 @@ void config_set_hotkey_mute_enabled(gboolean enabled);
 
 const gchar * config_get_helper();
 const gchar * config_get_theme();
+const gchar * config_get_card();
 const gchar * config_get_channel();
 gboolean config_get_use_gtk_theme();
 gboolean config_get_left_mouse_slider();

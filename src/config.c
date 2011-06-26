@@ -39,6 +39,7 @@
 static char * m_config_file = NULL;
 static char * m_helper_program = NULL;
 static gchar * m_theme = NULL;
+static gchar * m_card = NULL;
 static gchar * m_channel = NULL;
 static gchar * m_hotkey_up = NULL;
 static gchar * m_hotkey_down = NULL;
@@ -59,6 +60,8 @@ static void config_load_default()
 		config_set_helper("xterm -e 'alsamixer'");
 	if(!m_channel)
 		config_set_channel(NULL);
+	if(!m_card)
+		config_set_card("hw:0");
 	if(!m_stepsize)
 		config_set_stepsize(5);
 	if(!m_theme)
@@ -83,6 +86,7 @@ static void config_read()
 	GKeyFile * kf = g_key_file_new();
 	g_key_file_load_from_file(kf, m_config_file, G_KEY_FILE_NONE, NULL);
 	m_helper_program = g_key_file_get_value(kf, "StatusIcon", "onclick", NULL);
+	m_card = g_key_file_get_value(kf, "Alsa", "card", NULL);
 	m_channel = g_key_file_get_value(kf, "Alsa", "channel", NULL);
 	m_stepsize = g_key_file_get_integer(kf, "StatusIcon", "stepsize", NULL);
 	m_theme = g_key_file_get_value(kf, "StatusIcon", "theme", NULL);
@@ -113,6 +117,12 @@ void config_set_theme(const gchar * theme)
 {
 	g_free(m_theme);
 	m_theme = g_strdup(theme);
+}
+
+void config_set_card(const gchar * card)
+{
+	g_free(m_card);
+	m_card = g_strdup(card);
 }
 
 void config_set_channel(const gchar * channel)
@@ -177,6 +187,11 @@ const gchar * config_get_helper()
 const gchar * config_get_theme()
 {
 	return m_theme;
+}
+
+const gchar * config_get_card()
+{
+	return m_card;
 }
 
 const gchar * config_get_channel()
@@ -249,6 +264,8 @@ void config_write()
 		g_key_file_set_value(kf, "StatusIcon", "onclick", m_helper_program);
 	if(m_theme)
 		g_key_file_set_value(kf, "StatusIcon", "theme", m_theme);
+	if(m_card)
+		g_key_file_set_value(kf, "Alsa", "card", m_card);
 	if(m_channel)
 		g_key_file_set_value(kf, "Alsa", "channel", m_channel);
 	if(m_hotkey_up)

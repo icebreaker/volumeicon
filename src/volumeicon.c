@@ -795,7 +795,7 @@ int main(int argc, char * argv[])
 
 	// Setup
 	config_initialize();
-	backend_setup("hw:0", config_get_channel(), volume_icon_on_volume_changed);
+	backend_setup(config_get_card(), config_get_channel(), volume_icon_on_volume_changed);
 	m_volume = backend_get_volume();
 	m_mute = backend_get_mute();
 	volume_icon_load_icons();
