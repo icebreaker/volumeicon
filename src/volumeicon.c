@@ -28,6 +28,9 @@
 #include <signal.h>
 #include <unistd.h>
 
+#ifdef COMPILEWITH_NOTIFY
+	#include <libnotify/notify.h>	
+#endif
 #ifdef COMPILEWITH_OSS
 	#include "oss_backend.h"
 #else
@@ -67,6 +70,9 @@ enum HOTKEY
 //##############################################################################
 // Static variables
 //##############################################################################
+#ifdef COMPILEWITH_NOTIFY
+static NotifyNotification *m_notification = NULL;
+#endif
 static GtkStatusIcon * m_status_icon = NULL;
 static GtkWidget * m_scale_window = NULL;
 static GtkWidget * m_scale = NULL;
@@ -635,6 +641,22 @@ static void status_icon_update(gboolean mute, gboolean ignore_cache)
 		{
 			gtk_status_icon_set_from_pixbuf(m_status_icon, m_icons[icon_number-1]);
 		}
+
+		#ifdef COMPILEWITH_NOTIFY
+		if(icon_number == 1)
+			notify_notification_update(m_notification, APPNAME, NULL, 
+					"notification-audio-volume-muted");
+		else if(icon_number <= 3)
+			notify_notification_update(m_notification, APPNAME, NULL, 
+					"notification-audio-volume-low");
+		else if(icon_number <= 6)
+			notify_notification_update(m_notification, APPNAME, NULL, 
+					"notification-audio-volume-medium");
+		else
+			notify_notification_update(m_notification, APPNAME, NULL, 
+					"notification-audio-volume-high");
+		#endif
+
 		icon_cache = icon_number;
 	}
 
@@ -647,6 +669,12 @@ static void status_icon_update(gboolean mute, gboolean ignore_cache)
 		#else
 		gtk_status_icon_set_tooltip(m_status_icon, buffer);
 		#endif
+
+		#ifdef COMPILEWITH_NOTIFY
+		notify_notification_set_hint_int32(m_notification, "value", (gint) volume);
+		notify_notification_show(m_notification, NULL);
+		#endif
+
 		volume_cache = volume;
 	}
 }
@@ -772,6 +800,14 @@ int main(int argc, char * argv[])
 	gtk_init(&argc, &argv);
 	signal(SIGCHLD, SIG_IGN);
 
+	// Setup OSD Notification
+	#ifdef COMPILEWITH_NOTIFY
+	notify_init(APPNAME);
+	m_notification = notify_notification_new(APPNAME, NULL, NULL, NULL);
+	notify_notification_set_timeout(m_notification, NOTIFY_EXPIRES_DEFAULT);
+	notify_notification_set_hint_string(m_notification, "synchronous", "volume");
+	#endif
+
 	// Setup backend
 	#ifdef COMPILEWITH_OSS
 	backend_setup = &oss_setup;
@@ -815,6 +851,11 @@ int main(int argc, char * argv[])
 
 	// Main Loop
 	gtk_main();
+
+	#ifdef COMPILEWITH_NOTIFY
+	g_object_unref(G_OBJECT(m_notification));
+	notify_uninit();
+	#endif
 
 	return EXIT_SUCCESS;
 }

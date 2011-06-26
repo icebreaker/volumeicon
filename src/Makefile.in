@@ -97,10 +97,12 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
-LIBS = @GTK_LIBS@ @ALSA_LIBS@
+LIBS = @GTK_LIBS@ @ALSA_LIBS@ @NOTIFY_LIBS@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MKDIR_P = @MKDIR_P@
+NOTIFY_CFLAGS = @NOTIFY_CFLAGS@
+NOTIFY_LIBS = @NOTIFY_LIBS@
 OBJEXT = @OBJEXT@
 OSS_CFLAGS = @OSS_CFLAGS@
 PACKAGE = @PACKAGE@
@@ -161,7 +163,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AM_CFLAGS = -Wall -DDATADIR=\"@datadir@/volumeicon\" @GTK_CFLAGS@ \
-	@ALSA_CFLAGS@ @OSS_CFLAGS@ $(am__empty)
+	@ALSA_CFLAGS@ @OSS_CFLAGS@ @NOTIFY_CFLAGS@ $(am__empty)
 @ENABLE_OSS_FALSE@BACKEND = alsa_backend.c alsa_backend.h
 @ENABLE_OSS_TRUE@BACKEND = oss_backend.c oss_backend.h
 volumeicon_SOURCES = \
