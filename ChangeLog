@@ -1,0 +1,30 @@
+0.4.1:
+	- Instead of requiring libkeybinder, the libkeybinder source files are now
+	  compiled into volumeicon.
+
+0.4.0:
+	- Added hotkey support based on David Gidwani's patch. This adds a new
+	  dependancy for libkeybinder.
+
+0.3.0:
+	- Added oss support.
+
+0.2.0:
+	- Removed deprecated property from preferences.ui
+	- Cache icons
+
+0.1.1:
+	- Theme combobox in preferences menu is now populated by listing directories
+	  in the icons directory.
+	- Moved config to separate module.
+	- Moved appicon.svg to gui directory.
+
+0.1.0:
+	- Added mute support.
+	- Launching mixer from menu instead of click on the icon.
+	- Automatically choose first channel instead of 'Master'.
+	- Changed default settings.
+	- Only show channels with playback volume.
+
+0.0.1:
+	- First release.

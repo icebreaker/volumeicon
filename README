@@ -1,0 +1,9 @@
+To compile for alsa:
+	./configure
+	make
+	sudo make install
+
+To compile for oss:
+	./configure --enable-oss
+	make
+	sudo make install
