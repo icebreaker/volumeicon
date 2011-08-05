@@ -645,16 +645,16 @@ static void status_icon_update(gboolean mute, gboolean ignore_cache)
 		#ifdef COMPILEWITH_NOTIFY
 		if(icon_number == 1)
 			notify_notification_update(m_notification, APPNAME, NULL, 
-					"notification-audio-volume-muted");
+					"audio-volume-muted");
 		else if(icon_number <= 3)
 			notify_notification_update(m_notification, APPNAME, NULL, 
-					"notification-audio-volume-low");
+					"audio-volume-low");
 		else if(icon_number <= 6)
 			notify_notification_update(m_notification, APPNAME, NULL, 
-					"notification-audio-volume-medium");
+					"audio-volume-medium");
 		else
 			notify_notification_update(m_notification, APPNAME, NULL, 
-					"notification-audio-volume-high");
+					"audio-volume-high");
 		#endif
 
 		icon_cache = icon_number;
