@@ -671,8 +671,15 @@ static void status_icon_update(gboolean mute, gboolean ignore_cache)
 		#endif
 
 		#ifdef COMPILEWITH_NOTIFY
-		notify_notification_set_hint_int32(m_notification, "value", (gint) volume);
-		notify_notification_show(m_notification, NULL);
+		{
+			GError *error = NULL;
+			notify_notification_set_hint_int32(m_notification, "value", (gint) volume);
+			if(notify_notification_show(m_notification, &error) == FALSE)
+			{
+				g_fprintf(stderr, error->message);
+				g_error_free(error);
+			}
+		}
 		#endif
 
 		volume_cache = volume;
@@ -803,7 +810,11 @@ int main(int argc, char * argv[])
 	// Setup OSD Notification
 	#ifdef COMPILEWITH_NOTIFY
 	notify_init(APPNAME);
+	#ifdef NOTIFY_CHECK_VERSION
+	m_notification = notify_notification_new(APPNAME, NULL, NULL);
+	#else
 	m_notification = notify_notification_new(APPNAME, NULL, NULL, NULL);
+	#endif
 	notify_notification_set_timeout(m_notification, NOTIFY_EXPIRES_DEFAULT);
 	notify_notification_set_hint_string(m_notification, "synchronous", "volume");
 	#endif
