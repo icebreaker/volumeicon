@@ -2,6 +2,10 @@ Volume Icon
 ===========
 This is a fork of [Volume Icon](http://softwarebakery.com/maato/volumeicon.html) by [Maato](http://softwarebakery.com/maato/contact.html) .
 
+WARNING
+-------
+This repo is obsolete at this point because all changes have been merged into the "official" [Volume Icon](http://softwarebakery.com/maato/volumeicon.html) and therefore this fork is no longer supported.
+
 Enhancements
 ------------
 * built-in **OSD** support via `libnotify` (optional)
